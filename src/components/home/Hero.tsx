@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, MapPin, Calendar, Users, Compass, Building, Mountains, Palmtree, Music, Waves, Building2, Coffee } from "lucide-react";
+import { Search, MapPin, Calendar, Users, Compass, Building, Mountain, Palmtree, Music, Waves, Building2, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -13,7 +13,7 @@ const destinations = [
   { name: "Cartagena", icon: Palmtree },
   { name: "Medellín", icon: Building },
   { name: "Bogotá", icon: Building2 },
-  { name: "Santa Marta", icon: Mountains },
+  { name: "Santa Marta", icon: Mountain },
   { name: "Cali", icon: Music },
   { name: "San Andrés", icon: Waves },
   { name: "Villa de Leyva", icon: Compass },
