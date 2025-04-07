@@ -1,7 +1,8 @@
 
-import { ArrowRight, Calendar, Clock, Users, Star } from "lucide-react";
+import { ArrowRight, Calendar, Clock, Users, Star, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 type ExperienceType = {
   id: number;
@@ -74,10 +75,10 @@ const Experiences = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-primary mb-4">
               Experiencias auténticas con locales
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-secondary2">
               Vive Colombia a través de experiencias únicas diseñadas y guiadas por locales 
               apasionados que compartirán lo mejor de su cultura contigo.
             </p>
@@ -90,50 +91,50 @@ const Experiences = () => {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {experiences.map((experience) => (
-            <div 
-              key={experience.id} 
-              className="bg-white rounded-lg overflow-hidden shadow-md card-hover"
-            >
-              <div className="h-56 overflow-hidden relative">
-                <img 
-                  src={experience.image} 
-                  alt={experience.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-primary font-medium text-sm">
-                  {formatPrice(experience.price, experience.currency)}
+            <div key={experience.id} className="flex flex-col">
+              {/* Imagen con esquinas redondeadas y botón de favorito */}
+              <div className="relative mb-3">
+                <AspectRatio ratio={4/3} className="bg-muted rounded-xl overflow-hidden">
+                  <img 
+                    src={experience.image} 
+                    alt={experience.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </AspectRatio>
+                <button className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-gray-500 hover:text-primary transition-colors">
+                  <Heart className="h-5 w-5" />
+                </button>
+                <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+                  <Star className="h-4 w-4 fill-colombia-yellow text-colombia-yellow" />
+                  <span className="font-medium">{experience.rating}</span>
+                  <span className="text-gray-600">({experience.reviews})</span>
                 </div>
               </div>
               
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <span className="text-sm text-gray-500">{experience.location}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Star className="h-4 w-4 text-colombia-yellow mr-1" />
-                    <span className="text-sm font-medium">{experience.rating}</span>
-                    <span className="text-sm text-gray-500 ml-1">({experience.reviews})</span>
-                  </div>
+              {/* Contenido sin borde de tarjeta */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-secondary2">{experience.location}, Colombia</span>
                 </div>
                 
-                <h3 className="text-lg font-bold mb-3">{experience.title}</h3>
-                <p className="text-sm text-gray-500 mb-1">Anfitrión: {experience.host}</p>
+                <h3 className="text-lg font-semibold text-secondary2">{experience.title}</h3>
                 
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600 my-3">
-                  <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-1 text-primary" />
-                    {experience.duration}
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-1 text-primary" />
-                    {experience.groupSize}
-                  </div>
+                <div className="flex items-center text-sm text-gray-600 gap-1">
+                  <Clock className="h-3.5 w-3.5 text-primary" />
+                  <span>{experience.duration}</span>
+                  <span className="mx-1">•</span>
+                  <Users className="h-3.5 w-3.5 text-primary" />
+                  <span>{experience.groupSize}</span>
                 </div>
                 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <p className="pt-1 font-medium">
+                  <span className="text-secondary2">{formatPrice(experience.price, experience.currency)}</span>
+                  <span className="text-gray-600"> por persona</span>
+                </p>
+                
+                <div className="flex flex-wrap gap-2 pt-2">
                   {experience.tags.map((tag, index) => (
                     <span 
                       key={index} 
@@ -143,10 +144,6 @@ const Experiences = () => {
                     </span>
                   ))}
                 </div>
-                
-                <Button className="w-full bg-primary hover:bg-primary/90">
-                  Reservar
-                </Button>
               </div>
             </div>
           ))}
