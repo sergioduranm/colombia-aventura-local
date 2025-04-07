@@ -75,7 +75,7 @@ const DestinationHighlights = () => {
               key={destination.id} 
               className="bg-white rounded-lg overflow-hidden shadow group card-hover cursor-pointer"
             >
-              <div className="h-48 overflow-hidden relative">
+              <div className="h-64 sm:h-72 md:h-80 overflow-hidden relative">
                 <img 
                   src={destination.image} 
                   alt={destination.name} 
