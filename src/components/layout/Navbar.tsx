@@ -28,7 +28,7 @@ const Navbar = () => {
               to="/" 
               className="text-xl font-bold bg-clip-text text-transparent bg-colombia-gradient"
             >
-              Colombia Aventura
+              Kuna
             </Link>
           </div>
           

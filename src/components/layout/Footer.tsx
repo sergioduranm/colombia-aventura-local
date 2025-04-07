@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-colombia-gradient">
-              Colombia Aventura
+              Kuna
             </h3>
             <p className="text-gray-400 mb-4">
               Conectamos viajeros curiosos con expertos locales para explorar la Colombia auténtica de forma segura y significativa.
@@ -94,7 +94,7 @@ const Footer = () => {
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-primary mr-2" />
                 <span className="text-gray-400">
-                  info@colombiaaventura.com
+                  info@kuna.com
                 </span>
               </li>
               <li className="flex items-center">
@@ -109,7 +109,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 mt-10 pt-6">
           <p className="text-gray-500 text-center text-sm">
-            © {new Date().getFullYear()} Colombia Aventura. Todos los derechos reservados.
+            © {new Date().getFullYear()} Kuna. Todos los derechos reservados.
           </p>
         </div>
       </div>
