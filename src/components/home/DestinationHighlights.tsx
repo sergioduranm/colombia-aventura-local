@@ -81,12 +81,10 @@ const DestinationHighlights = () => {
                   alt={destination.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white p-4">
-                  <h3 className="font-bold">{destination.name}</h3>
-                  <p className="text-sm opacity-90">{destination.region}</p>
-                </div>
               </div>
               <div className="p-4">
+                <h3 className="font-bold text-gray-900 mb-1">{destination.name}</h3>
+                <p className="text-sm text-gray-600 mb-2">{destination.region}</p>
                 <p className="text-gray-600 text-sm mb-4">{destination.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {destination.tags.map((tag, index) => (
