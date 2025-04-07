@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, MapPin, Calendar, Users, Compass, Building, Mountain, Palmtree, Music, Waves, Building2, Coffee } from "lucide-react";
+import { Search, MapPin, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -8,17 +8,6 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-
-const destinations = [
-  { name: "Cartagena", icon: Palmtree },
-  { name: "Medellín", icon: Building },
-  { name: "Bogotá", icon: Building2 },
-  { name: "Santa Marta", icon: Mountain },
-  { name: "Cali", icon: Music },
-  { name: "San Andrés", icon: Waves },
-  { name: "Villa de Leyva", icon: Compass },
-  { name: "Salento", icon: Coffee }
-];
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -128,26 +117,6 @@ const Hero = () => {
               <Search className="h-5 w-5 mr-2" />
               Buscar
             </Button>
-          </div>
-        </div>
-        
-        {/* Popular destinations section */}
-        <div className="max-w-5xl mx-auto mt-10">
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-            {destinations.map((destination) => {
-              const IconComponent = destination.icon;
-              return (
-                <div 
-                  key={destination.name}
-                  className="flex flex-col items-center cursor-pointer transition-transform hover:scale-105"
-                >
-                  <div className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center mb-2">
-                    <IconComponent className="h-5 w-5 text-brand-accent" />
-                  </div>
-                  <span className="text-sm font-medium text-brand-secondary2">{destination.name}</span>
-                </div>
-              );
-            })}
           </div>
         </div>
       </div>

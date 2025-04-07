@@ -1,6 +1,5 @@
 
 import Hero from "@/components/home/Hero";
-import DestinationHighlights from "@/components/home/DestinationHighlights";
 import LocalExperts from "@/components/home/LocalExperts";
 import Experiences from "@/components/home/Experiences";
 import MissionStatement from "@/components/home/MissionStatement";
@@ -13,7 +12,6 @@ const Index = () => {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <DestinationHighlights />
         <LocalExperts />
         <Experiences />
         <MissionStatement />
