@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, MapPin, Calendar, Plus, Minus } from "lucide-react";
+import { Search, MapPin, Calendar, Plus, Minus, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -89,7 +89,7 @@ const Hero = () => {
                   <PopoverTrigger asChild>
                     <Button 
                       variant="ghost" 
-                      className="h-6 p-0 text-left font-normal justify-start hover:bg-transparent text-sm"
+                      className="h-6 p-0 text-left font-normal justify-start hover:bg-transparent text-sm group"
                     >
                       {startDate && endDate ? (
                         <span>
@@ -98,6 +98,7 @@ const Hero = () => {
                       ) : (
                         <span className="text-gray-500">Seleccionar fechas</span>
                       )}
+                      <ChevronDown className="h-4 w-4 ml-1 text-gray-400 group-hover:text-brand-primary transition-colors" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -119,7 +120,7 @@ const Hero = () => {
               </div>
             </div>
             
-            {/* Travelers field - new implementation */}
+            {/* Travelers field - with dropdown icon */}
             <div className="flex-1 flex items-center p-2 md:px-4">
               <div className="flex-grow">
                 <label className="block text-xs text-gray-500 font-medium">Personas</label>
@@ -127,9 +128,12 @@ const Hero = () => {
                   <PopoverTrigger asChild>
                     <Button 
                       variant="ghost" 
-                      className="h-6 p-0 text-left font-normal justify-start hover:bg-transparent text-sm"
+                      className="h-6 p-0 text-left font-normal justify-start hover:bg-transparent text-sm group w-full flex items-center"
                     >
-                      {totalTravelers === 1 ? '1 persona' : `${totalTravelers} personas`}
+                      <span className="flex-grow">
+                        {totalTravelers === 1 ? '1 persona' : `${totalTravelers} personas`}
+                      </span>
+                      <ChevronDown className="h-4 w-4 ml-1 text-gray-400 group-hover:text-brand-primary transition-colors" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[300px] p-4" align="start">
