@@ -1,11 +1,20 @@
 
 import { useState } from "react";
-import { Search, MapPin } from "lucide-react";
+import { Search, MapPin, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
+  const [guests, setGuests] = useState("1");
   
   return (
     <div className="hero-pattern min-h-[80vh] flex flex-col justify-center relative overflow-hidden">
@@ -25,21 +34,90 @@ const Hero = () => {
             Conectamos viajeros como tú con colombianos apasionados que te acompañarán a explorar lo auténtico y resolver lo práctico.
           </p>
           
-          <div className="bg-white p-2 rounded-full shadow-lg flex mb-8">
-            <div className="flex-grow flex items-center px-4">
-              <MapPin className="h-5 w-5 text-gray-400 mr-2" />
-              <input
-                type="text"
-                placeholder="¿A dónde quieres ir en Colombia?"
-                className="w-full bg-transparent border-none focus:outline-none text-gray-700"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+          <div className="bg-white p-3 md:p-4 rounded-xl shadow-lg mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-2">
+              {/* Destination field */}
+              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2">
+                <MapPin className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
+                <div className="flex-grow">
+                  <label htmlFor="destination" className="block text-xs text-gray-500 font-medium mb-1">Destino</label>
+                  <Input
+                    id="destination"
+                    type="text"
+                    placeholder="¿A dónde quieres ir?"
+                    className="border-0 p-0 h-6 bg-transparent focus-visible:ring-0 text-sm"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+              
+              {/* Date Range field */}
+              <div className="md:col-span-2 flex items-center bg-gray-50 rounded-lg px-3 py-2">
+                <Calendar className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
+                <div className="flex-grow">
+                  <label className="block text-xs text-gray-500 font-medium mb-1">Fechas</label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        className="h-6 p-0 text-left font-normal justify-start hover:bg-transparent text-sm"
+                      >
+                        {startDate && endDate ? (
+                          <span>
+                            {format(startDate, "dd MMM")} - {format(endDate, "dd MMM, yyyy")}
+                          </span>
+                        ) : (
+                          <span className="text-gray-500">Seleccionar fechas</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <CalendarComponent
+                        mode="range"
+                        selected={{
+                          from: startDate,
+                          to: endDate
+                        }}
+                        onSelect={(range) => {
+                          setStartDate(range?.from);
+                          setEndDate(range?.to);
+                        }}
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+              
+              {/* Guests field */}
+              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2">
+                <Users className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
+                <div className="flex-grow">
+                  <label className="block text-xs text-gray-500 font-medium mb-1">Personas</label>
+                  <Select value={guests} onValueChange={setGuests}>
+                    <SelectTrigger className="border-0 p-0 h-6 bg-transparent focus-visible:ring-0 text-sm">
+                      <SelectValue placeholder="Número de personas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                        <SelectItem key={num} value={num.toString()}>
+                          {num} {num === 1 ? 'persona' : 'personas'}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
-            <Button className="rounded-full bg-primary hover:bg-primary/90 px-6">
-              <Search className="h-5 w-5 mr-2" />
-              Buscar
-            </Button>
+            
+            <div className="mt-4 flex justify-center">
+              <Button className="rounded-full bg-primary hover:bg-primary/90 px-8 py-2 text-base">
+                <Search className="h-5 w-5 mr-2" />
+                Buscar
+              </Button>
+            </div>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
