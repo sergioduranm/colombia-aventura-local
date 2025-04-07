@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Search, MapPin, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
@@ -118,19 +117,6 @@ const Hero = () => {
                 Buscar
               </Button>
             </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/destinations">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                Explorar Destinos
-              </Button>
-            </Link>
-            <Link to="/locals">
-              <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-orange-50">
-                Conocer Locales
-              </Button>
-            </Link>
           </div>
         </div>
       </div>
