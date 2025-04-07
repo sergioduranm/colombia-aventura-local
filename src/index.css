@@ -93,11 +93,11 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-secondary2 font-body;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    @apply font-heading text-primary;
   }
 }
 
@@ -115,12 +115,4 @@
 .card-hover:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-}
-
-.brand-gradient-text {
-  @apply bg-clip-text text-transparent bg-brand-gradient;
-}
-
-.rural-gradient-text {
-  @apply bg-clip-text text-transparent bg-rural-gradient;
 }

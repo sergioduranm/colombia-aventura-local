@@ -28,7 +28,7 @@ const values = [
 
 const MissionStatement = () => {
   return (
-    <section className="py-16 bg-brand-primary">
+    <section className="py-16 bg-primary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl font-bold text-white mb-4 font-heading">
@@ -46,9 +46,9 @@ const MissionStatement = () => {
             return (
               <div 
                 key={index} 
-                className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-colors"
+                className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-colors border border-white/20"
               >
-                <div className="inline-flex items-center justify-center p-3 bg-brand-accent/30 rounded-full mb-4">
+                <div className="inline-flex items-center justify-center p-3 bg-accent rounded-full mb-4">
                   <IconComponent className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2 font-heading">{value.title}</h3>
@@ -60,7 +60,7 @@ const MissionStatement = () => {
         
         <div className="text-center mt-12">
           <Link to="/about">
-            <Button className="bg-brand-accent text-white hover:bg-brand-accent/90">
+            <Button className="bg-accent hover:bg-accent/90 text-white border-2 border-transparent hover:border-white/20">
               Conoce más sobre nosotros
             </Button>
           </Link>

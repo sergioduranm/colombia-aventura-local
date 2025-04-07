@@ -116,14 +116,6 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 5s ease-in-out infinite'
-			},
-			backgroundImage: {
-				'colombia-gradient': 'linear-gradient(90deg, hsla(39, 100%, 77%, 1) 0%, hsla(22, 90%, 57%, 1) 100%)',
-				'jungle-gradient': 'linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)',
-				'ocean-gradient': 'linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%)',
-				'coffee-gradient': 'linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)',
-				'brand-gradient': 'linear-gradient(90deg, #386641 0%, #BC9465 100%)',
-				'rural-gradient': 'linear-gradient(90deg, #F2E8CF 0%, #8B4513 100%)'
 			}
 		}
 	},
