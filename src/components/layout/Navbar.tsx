@@ -26,7 +26,7 @@ const Navbar = () => {
           <div className="flex-shrink-0 flex items-center">
             <Link 
               to="/" 
-              className="text-xl font-bold bg-clip-text text-transparent bg-colombia-gradient"
+              className="text-xl font-heading font-bold brand-gradient-text"
             >
               Kuna
             </Link>
@@ -36,22 +36,22 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <Link
               to="/my-trip"
-              className="text-sm font-medium px-3 py-2 rounded-md flex items-center transition-colors hover:text-primary hover:bg-orange-50"
+              className="text-sm font-medium px-3 py-2 rounded-md flex items-center transition-colors hover:text-brand-primary hover:bg-brand-secondary1/30"
             >
               Mi Viaje
             </Link>
             <Link
               to="/local-portal"
-              className="text-sm font-medium px-3 py-2 rounded-md flex items-center transition-colors hover:text-primary hover:bg-orange-50"
+              className="text-sm font-medium px-3 py-2 rounded-md flex items-center transition-colors hover:text-brand-primary hover:bg-brand-secondary1/30"
             >
               Ser Anfitrión
             </Link>
             <Link
               to="/profile"
-              className="text-sm font-medium p-1 rounded-full flex items-center transition-colors hover:bg-gray-100"
+              className="text-sm font-medium p-1 rounded-full flex items-center transition-colors hover:bg-brand-secondary1/30"
             >
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary/10 text-primary">
+                <AvatarFallback className="bg-brand-primary/10 text-brand-primary">
                   <User className="h-4 w-4" />
                 </AvatarFallback>
               </Avatar>
@@ -63,7 +63,7 @@ const Navbar = () => {
             <Sheet>
               <SheetTrigger asChild>
                 <button
-                  className="text-gray-600 hover:text-primary focus:outline-none"
+                  className="text-brand-secondary2 hover:text-brand-primary focus:outline-none"
                   aria-label="Open menu"
                 >
                   <Menu className="h-6 w-6" />
@@ -75,10 +75,10 @@ const Navbar = () => {
                     <div className="mb-8 px-2">
                       <Link 
                         to="/profile"
-                        className="flex items-center px-2 py-3 rounded-md hover:bg-orange-50"
+                        className="flex items-center px-2 py-3 rounded-md hover:bg-brand-secondary1/30"
                       >
                         <Avatar className="h-10 w-10 mr-3">
-                          <AvatarFallback className="bg-primary/10 text-primary">
+                          <AvatarFallback className="bg-brand-primary/10 text-brand-primary">
                             <User className="h-5 w-5" />
                           </AvatarFallback>
                         </Avatar>
@@ -91,13 +91,13 @@ const Navbar = () => {
                     <div className="space-y-1 px-2">
                       <Link
                         to="/my-trip"
-                        className="flex items-center px-2 py-3 text-sm rounded-md hover:bg-orange-50"
+                        className="flex items-center px-2 py-3 text-sm rounded-md hover:bg-brand-secondary1/30"
                       >
                         Mi Viaje
                       </Link>
                       <Link
                         to="/local-portal"
-                        className="flex items-center px-2 py-3 text-sm rounded-md hover:bg-orange-50"
+                        className="flex items-center px-2 py-3 text-sm rounded-md hover:bg-brand-secondary1/30"
                       >
                         Ser Anfitrión
                       </Link>
@@ -108,8 +108,8 @@ const Navbar = () => {
                           <Link
                             key={link.path}
                             to={link.path}
-                            className={`flex items-center px-2 py-3 text-sm rounded-md hover:bg-orange-50 ${
-                              location.pathname === link.path ? "text-primary bg-orange-50 font-medium" : "text-gray-600"
+                            className={`flex items-center px-2 py-3 text-sm rounded-md hover:bg-brand-secondary1/30 ${
+                              location.pathname === link.path ? "text-brand-primary bg-brand-secondary1/30 font-medium" : "text-brand-secondary2"
                             }`}
                           >
                             <IconComponent className="w-4 h-4 mr-3" />

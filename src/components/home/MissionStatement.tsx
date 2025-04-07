@@ -28,13 +28,13 @@ const values = [
 
 const MissionStatement = () => {
   return (
-    <section className="py-16 bg-coffee-gradient">
+    <section className="py-16 bg-brand-primary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-white mb-4 font-heading">
             Nuestra Misión
           </h2>
-          <p className="text-xl text-white/90">
+          <p className="text-xl text-white/90 font-body">
             Ser el puente de confianza que conecta viajeros curiosos con expertos locales, transformando la exploración 
             de la Colombia menos conocida en una aventura humana, significativa y segura.
           </p>
@@ -48,11 +48,11 @@ const MissionStatement = () => {
                 key={index} 
                 className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-colors"
               >
-                <div className="inline-flex items-center justify-center p-3 bg-white/20 rounded-full mb-4">
+                <div className="inline-flex items-center justify-center p-3 bg-brand-accent/30 rounded-full mb-4">
                   <IconComponent className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{value.title}</h3>
-                <p className="text-white/80">{value.description}</p>
+                <h3 className="text-xl font-bold text-white mb-2 font-heading">{value.title}</h3>
+                <p className="text-white/80 font-body">{value.description}</p>
               </div>
             );
           })}
@@ -60,7 +60,7 @@ const MissionStatement = () => {
         
         <div className="text-center mt-12">
           <Link to="/about">
-            <Button className="bg-white text-primary hover:bg-white/90">
+            <Button className="bg-brand-accent text-white hover:bg-brand-accent/90">
               Conoce más sobre nosotros
             </Button>
           </Link>

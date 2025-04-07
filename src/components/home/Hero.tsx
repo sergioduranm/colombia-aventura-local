@@ -27,20 +27,20 @@ const Hero = () => {
   const [guests, setGuests] = useState("1");
   
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 pt-12 pb-16">
+    <div className="relative overflow-hidden bg-brand-secondary1/30 pt-12 pb-16">
       <div className="absolute inset-0 z-0 opacity-20">
-        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-colombia-yellow/30 animate-float" style={{ animationDelay: "0s" }}></div>
-        <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-colombia-red/20 animate-float" style={{ animationDelay: "1s" }}></div>
-        <div className="absolute top-40 left-1/4 w-72 h-72 rounded-full bg-colombia-green/20 animate-float" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-brand-primary/20 animate-float" style={{ animationDelay: "0s" }}></div>
+        <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-brand-accent/20 animate-float" style={{ animationDelay: "1s" }}></div>
+        <div className="absolute top-40 left-1/4 w-72 h-72 rounded-full bg-brand-secondary1/60 animate-float" style={{ animationDelay: "2s" }}></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 text-brand-secondary2 font-heading">
             Descubre Colombia 
-            <span className="bg-clip-text text-transparent bg-colombia-gradient"> con expertos locales</span>
+            <span className="brand-gradient-text ml-1">con expertos locales</span>
           </h1>
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-brand-secondary2/80 mb-6 font-body">
             Conectamos viajeros como tú con colombianos apasionados que te acompañarán a explorar lo auténtico y resolver lo práctico.
           </p>
         </div>
@@ -50,7 +50,7 @@ const Hero = () => {
           <div className="bg-white rounded-full shadow-lg p-2 md:p-3 flex flex-col md:flex-row items-stretch">
             {/* Destination field */}
             <div className="flex-1 flex items-center border-b md:border-b-0 md:border-r border-gray-200 p-2 md:pr-4">
-              <MapPin className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
+              <MapPin className="h-5 w-5 text-brand-accent mr-2 shrink-0" />
               <div className="flex-grow">
                 <label htmlFor="destination" className="block text-xs text-gray-500 font-medium">Destino</label>
                 <Input
@@ -66,7 +66,7 @@ const Hero = () => {
             
             {/* Date Range field */}
             <div className="flex-1 flex items-center border-b md:border-b-0 md:border-r border-gray-200 p-2 md:px-4">
-              <Calendar className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
+              <Calendar className="h-5 w-5 text-brand-accent mr-2 shrink-0" />
               <div className="flex-grow">
                 <label className="block text-xs text-gray-500 font-medium">Fechas</label>
                 <Popover>
@@ -105,7 +105,7 @@ const Hero = () => {
             
             {/* Guests field */}
             <div className="flex-1 flex items-center p-2 md:px-4">
-              <Users className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
+              <Users className="h-5 w-5 text-brand-accent mr-2 shrink-0" />
               <div className="flex-grow">
                 <label className="block text-xs text-gray-500 font-medium">Personas</label>
                 <Select value={guests} onValueChange={setGuests}>
@@ -124,7 +124,7 @@ const Hero = () => {
             </div>
             
             {/* Search button */}
-            <Button className="mt-3 md:mt-0 h-full md:h-auto md:self-center rounded-full bg-primary hover:bg-primary/90 px-8 py-3 text-base shrink-0">
+            <Button className="mt-3 md:mt-0 h-full md:h-auto md:self-center rounded-full bg-brand-primary hover:bg-brand-primary/90 px-8 py-3 text-base shrink-0">
               <Search className="h-5 w-5 mr-2" />
               Buscar
             </Button>
@@ -142,7 +142,7 @@ const Hero = () => {
                 <div className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center text-2xl mb-2">
                   {destination.icon}
                 </div>
-                <span className="text-sm font-medium">{destination.name}</span>
+                <span className="text-sm font-medium text-brand-secondary2">{destination.name}</span>
               </div>
             ))}
           </div>
