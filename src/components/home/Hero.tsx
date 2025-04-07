@@ -1,19 +1,46 @@
 
 import { useState } from "react";
-import { Search, MapPin, Calendar, Users } from "lucide-react";
+import { Search, MapPin, Calendar, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+
+type TravelerCategory = {
+  type: string;
+  description: string;
+  count: number;
+};
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const [guests, setGuests] = useState("1");
+  
+  // Reemplazar el estado simple de invitados con categorías de viajeros
+  const [travelers, setTravelers] = useState<TravelerCategory[]>([
+    { type: "Adultos", description: "Desde 15 años", count: 1 },
+    { type: "Jóvenes", description: "De 12 a 14 años", count: 0 },
+    { type: "Niños", description: "De 2 a 11 años", count: 0 },
+    { type: "Bebés", description: "Menores de 2 años", count: 0 },
+  ]);
+
+  const totalTravelers = travelers.reduce((sum, category) => sum + category.count, 0);
+
+  const updateTravelerCount = (index: number, increment: boolean) => {
+    const newTravelers = [...travelers];
+    if (increment) {
+      newTravelers[index].count += 1;
+    } else {
+      // No permitir menos de 0 para ninguna categoría, y al menos 1 adulto
+      if (newTravelers[index].count > 0 && (index !== 0 || newTravelers[index].count > 1)) {
+        newTravelers[index].count -= 1;
+      }
+    }
+    setTravelers(newTravelers);
+  };
   
   return (
     <div className="relative overflow-hidden bg-brand-secondary1/30 pt-12 pb-16">
@@ -92,23 +119,56 @@ const Hero = () => {
               </div>
             </div>
             
-            {/* Guests field */}
+            {/* Travelers field - new implementation */}
             <div className="flex-1 flex items-center p-2 md:px-4">
-              <Users className="h-5 w-5 text-brand-accent mr-2 shrink-0" />
               <div className="flex-grow">
                 <label className="block text-xs text-gray-500 font-medium">Personas</label>
-                <Select value={guests} onValueChange={setGuests}>
-                  <SelectTrigger className="border-0 p-0 h-6 bg-transparent focus-visible:ring-0 text-sm">
-                    <SelectValue placeholder="Número de personas" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                      <SelectItem key={num} value={num.toString()}>
-                        {num} {num === 1 ? 'persona' : 'personas'}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="h-6 p-0 text-left font-normal justify-start hover:bg-transparent text-sm"
+                    >
+                      {totalTravelers === 1 ? '1 persona' : `${totalTravelers} personas`}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[300px] p-4" align="start">
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-brand-secondary2">¿Quiénes viajan?</h3>
+                      
+                      {travelers.map((category, index) => (
+                        <div key={category.type} className="flex items-center justify-between">
+                          <div>
+                            <p className="font-medium text-brand-secondary2">{category.type}</p>
+                            <p className="text-sm text-gray-500">{category.description}</p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Button
+                              size="icon"
+                              variant="outline"
+                              className="h-9 w-9 rounded-full border-gray-300"
+                              onClick={() => updateTravelerCount(index, false)}
+                              disabled={(index === 0 && category.count <= 1) || category.count <= 0}
+                            >
+                              <Minus className="h-4 w-4" />
+                              <span className="sr-only">Reduce</span>
+                            </Button>
+                            <span className="text-xl font-medium w-5 text-center">{category.count}</span>
+                            <Button
+                              size="icon"
+                              variant="outline"
+                              className="h-9 w-9 rounded-full border-gray-300"
+                              onClick={() => updateTravelerCount(index, true)}
+                            >
+                              <Plus className="h-4 w-4" />
+                              <span className="sr-only">Increase</span>
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
             
