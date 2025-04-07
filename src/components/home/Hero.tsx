@@ -33,10 +33,10 @@ const Hero = () => {
             Conectamos viajeros como tú con colombianos apasionados que te acompañarán a explorar lo auténtico y resolver lo práctico.
           </p>
           
-          <div className="bg-white p-3 md:p-4 rounded-xl shadow-lg mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-2">
+          <div className="bg-white p-4 rounded-xl shadow-lg mb-8">
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4">
               {/* Destination field */}
-              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2">
+              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2 flex-1">
                 <MapPin className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
                 <div className="flex-grow">
                   <label htmlFor="destination" className="block text-xs text-gray-500 font-medium mb-1">Destino</label>
@@ -52,7 +52,7 @@ const Hero = () => {
               </div>
               
               {/* Date Range field */}
-              <div className="md:col-span-2 flex items-center bg-gray-50 rounded-lg px-3 py-2">
+              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2 flex-1">
                 <Calendar className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
                 <div className="flex-grow">
                   <label className="block text-xs text-gray-500 font-medium mb-1">Fechas</label>
@@ -91,7 +91,7 @@ const Hero = () => {
               </div>
               
               {/* Guests field */}
-              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2">
+              <div className="flex items-center bg-gray-50 rounded-lg px-3 py-2 flex-1">
                 <Users className="h-5 w-5 text-gray-400 mr-2 shrink-0" />
                 <div className="flex-grow">
                   <label className="block text-xs text-gray-500 font-medium mb-1">Personas</label>
@@ -109,10 +109,9 @@ const Hero = () => {
                   </Select>
                 </div>
               </div>
-            </div>
-            
-            <div className="mt-4 flex justify-center">
-              <Button className="rounded-full bg-primary hover:bg-primary/90 px-8 py-2 text-base">
+              
+              {/* Search button */}
+              <Button className="rounded-full bg-primary hover:bg-primary/90 px-8 h-12 text-base shrink-0">
                 <Search className="h-5 w-5 mr-2" />
                 Buscar
               </Button>
