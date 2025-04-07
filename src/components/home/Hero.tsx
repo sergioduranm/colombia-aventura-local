@@ -19,10 +19,10 @@ const Hero = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   
-  // Reemplazar el estado simple de invitados con categorías de viajeros
+  // Actualización de las categorías de viajeros según las nuevas especificaciones
   const [travelers, setTravelers] = useState<TravelerCategory[]>([
-    { type: "Adultos", description: "Desde 15 años", count: 1 },
-    { type: "Jóvenes", description: "De 12 a 14 años", count: 0 },
+    { type: "Adultos y jóvenes", description: "De 12 a 60 años", count: 1 },
+    { type: "Adultos mayores", description: "Desde 60 años", count: 0 },
     { type: "Niños", description: "De 2 a 11 años", count: 0 },
     { type: "Bebés", description: "Menores de 2 años", count: 0 },
   ]);
@@ -34,8 +34,13 @@ const Hero = () => {
     if (increment) {
       newTravelers[index].count += 1;
     } else {
-      // No permitir menos de 0 para ninguna categoría, y al menos 1 adulto
-      if (newTravelers[index].count > 0 && (index !== 0 || newTravelers[index].count > 1)) {
+      // No permitir menos de 0 para ninguna categoría, y al menos 1 viajero adulto (entre adultos jóvenes y mayores)
+      if (newTravelers[index].count > 0 && 
+         ((index === 0 && newTravelers[index].count > 1 && newTravelers[1].count === 0) || 
+          (index === 1 && newTravelers[index].count > 1 && newTravelers[0].count === 0) ||
+          (index === 1 && newTravelers[0].count > 0) ||
+          (index === 0 && newTravelers[1].count > 0) ||
+          (index > 1))) {
         newTravelers[index].count -= 1;
       }
     }
@@ -152,7 +157,7 @@ const Hero = () => {
                               variant="outline"
                               className="h-9 w-9 rounded-full border-gray-300"
                               onClick={() => updateTravelerCount(index, false)}
-                              disabled={(index === 0 && category.count <= 1) || category.count <= 0}
+                              disabled={(index <= 1 && category.count <= 1 && travelers[0].count + travelers[1].count <= 1) || category.count <= 0}
                             >
                               <Minus className="h-4 w-4" />
                               <span className="sr-only">Reduce</span>
