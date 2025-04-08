@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Locals from "./pages/Locals";
 import Experiences from "./pages/Experiences";
+import ExperienceDetail from "./pages/ExperienceDetail";
 import MyTrip from "./pages/MyTrip";
 import Community from "./pages/Community";
 import About from "./pages/About";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/locals" element={<Locals />} />
           <Route path="/experiences" element={<Experiences />} />
+          <Route path="/experiences/:id" element={<ExperienceDetail />} />
           <Route path="/my-trip" element={<MyTrip />} />
           <Route path="/community" element={<Community />} />
           <Route path="/about" element={<About />} />

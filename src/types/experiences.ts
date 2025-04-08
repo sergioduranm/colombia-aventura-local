@@ -4,6 +4,10 @@ export type ExperienceType = {
   title: string;
   location: string;
   host: string;
+  hostAvatar?: string;
+  hostSince?: string;
+  hostLanguages?: string[];
+  hostDescription?: string;
   price: number;
   currency: string;
   duration: string;
@@ -11,5 +15,14 @@ export type ExperienceType = {
   rating: number;
   reviews: number;
   image: string;
+  gallery?: string[];
   tags: string[];
+  description?: string;
+  itinerary?: string;
+  included?: {
+    food?: string;
+    drinks?: string;
+    equipment?: string;
+  };
+  cancellationPolicy?: string;
 };

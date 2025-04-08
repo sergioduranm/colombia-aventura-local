@@ -2,6 +2,8 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Star, Heart, Users, Clock } from "lucide-react";
 import { ExperienceType } from "@/types/experiences";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Link } from "react-router-dom";
 
 // Format price with thousands separators
 const formatPrice = (price: number, currency: string) => {
@@ -13,17 +15,24 @@ type ExperienceCardProps = {
 };
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
+  // Get host initials for avatar fallback
+  const getHostInitials = (name: string) => {
+    return name.charAt(0).toUpperCase();
+  };
+
   return (
     <div className="flex flex-col">
       {/* Imagen con esquinas redondeadas y botón de favorito */}
       <div className="relative mb-3">
-        <AspectRatio ratio={4/3} className="bg-muted rounded-xl overflow-hidden">
-          <img 
-            src={experience.image} 
-            alt={experience.title} 
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          />
-        </AspectRatio>
+        <Link to={`/experiences/${experience.id}`}>
+          <AspectRatio ratio={4/3} className="bg-muted rounded-xl overflow-hidden">
+            <img 
+              src={experience.image} 
+              alt={experience.title} 
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            />
+          </AspectRatio>
+        </Link>
         <button className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-gray-500 hover:text-primary transition-colors">
           <Heart className="h-5 w-5" />
         </button>
@@ -36,11 +45,17 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
       
       {/* Contenido sin borde de tarjeta */}
       <div className="space-y-1">
-        <div className="flex items-center justify-between">
-          <span className="font-medium text-secondary2">{experience.location}, Colombia</span>
+        <div className="flex items-center gap-2">
+          <Avatar className="h-6 w-6">
+            <AvatarImage src={experience.hostAvatar} alt={experience.host} />
+            <AvatarFallback>{getHostInitials(experience.host)}</AvatarFallback>
+          </Avatar>
+          <span className="text-secondary2">{experience.host} • {experience.location}, Colombia</span>
         </div>
         
-        <h3 className="text-lg font-semibold text-secondary2">{experience.title}</h3>
+        <Link to={`/experiences/${experience.id}`} className="block">
+          <h3 className="text-lg font-semibold text-secondary2 hover:underline">{experience.title}</h3>
+        </Link>
         
         <div className="flex items-center text-sm text-gray-600 gap-1">
           <Clock className="h-3.5 w-3.5 text-primary" />
