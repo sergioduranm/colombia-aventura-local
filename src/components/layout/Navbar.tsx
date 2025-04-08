@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Users, Calendar, BookOpen, HelpCircle, Info, User } from "lucide-react";
+import { Menu, X, Users, Calendar, BookOpen, HelpCircle, Info, User, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -46,14 +46,22 @@ const Navbar = () => {
               Ser Anfitrión
             </Link>
             <Link
-              to="/profile"
+              to="/login"
               className="text-sm font-medium p-1 rounded-full flex items-center transition-colors hover:bg-brand-secondary1/30"
             >
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-brand-primary/10 text-brand-primary">
-                  <User className="h-4 w-4" />
-                </AvatarFallback>
-              </Avatar>
+              <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Iniciar Sesión
+              </Button>
+            </Link>
+            <Link
+              to="/register"
+              className="text-sm font-medium p-1 flex items-center"
+            >
+              <Button size="sm" className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                Registrarse
+              </Button>
             </Link>
           </div>
           
@@ -73,7 +81,7 @@ const Navbar = () => {
                   <div className="flex-1 py-4">
                     <div className="mb-8 px-2">
                       <Link 
-                        to="/profile"
+                        to="/login"
                         className="flex items-center px-2 py-3 rounded-md hover:bg-brand-secondary1/30"
                       >
                         <Avatar className="h-10 w-10 mr-3">
@@ -99,6 +107,12 @@ const Navbar = () => {
                         className="flex items-center px-2 py-3 text-sm rounded-md hover:bg-brand-secondary1/30"
                       >
                         Ser Anfitrión
+                      </Link>
+                      <Link
+                        to="/register"
+                        className="flex items-center px-2 py-3 text-sm rounded-md hover:bg-brand-secondary1/30"
+                      >
+                        Registrarse
                       </Link>
                       <div className="h-px bg-gray-200 my-2"></div>
                       {navLinks.map((link) => {

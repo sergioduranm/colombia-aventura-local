@@ -17,6 +17,9 @@ import About from "./pages/About";
 import Help from "./pages/Help";
 import LocalPortal from "./pages/LocalPortal";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -39,6 +42,9 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/help" element={<Help />} />
               <Route path="/local-portal" element={<LocalPortal />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
