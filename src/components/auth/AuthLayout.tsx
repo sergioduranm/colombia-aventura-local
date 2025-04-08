@@ -14,7 +14,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title }) => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-block">
             <img 
-              src="/public/lovable-uploads/661a20e2-a76d-4552-a7a2-e3feb7a0e858.png" 
+              src="/kuna-logo.svg" 
               alt="Kuna Logo" 
               className="w-16 h-16 mx-auto mb-6"
             />
