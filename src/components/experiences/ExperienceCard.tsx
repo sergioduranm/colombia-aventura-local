@@ -2,20 +2,10 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Star, Heart, Users, Clock } from "lucide-react";
 import { ExperienceType } from "@/types/experiences";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 // Format price with thousands separators
 const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('es-CO', { style: 'currency', currency, maximumFractionDigits: 0 }).format(price);
-};
-
-// Get initials from name for avatar fallback
-const getInitials = (name: string) => {
-  return name
-    .split(' ')
-    .map(part => part.charAt(0))
-    .join('')
-    .toUpperCase();
 };
 
 type ExperienceCardProps = {
@@ -44,21 +34,12 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         </div>
       </div>
       
-      {/* Host Avatar and Name with Location */}
-      <div className="flex items-center gap-2 mb-2">
-        <Avatar className="h-8 w-8 border border-primary/10">
-          <AvatarFallback className="bg-primary/10 text-primary text-xs">
-            {getInitials(experience.host)}
-          </AvatarFallback>
-        </Avatar>
-        <span className="text-sm font-medium">
-          <span className="text-primary">{experience.host}</span>
-          <span className="text-gray-500"> • {experience.location}, Colombia</span>
-        </span>
-      </div>
-      
       {/* Contenido sin borde de tarjeta */}
       <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="font-medium text-secondary2">{experience.location}, Colombia</span>
+        </div>
+        
         <h3 className="text-lg font-semibold text-secondary2">{experience.title}</h3>
         
         <div className="flex items-center text-sm text-gray-600 gap-1">
