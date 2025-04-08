@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,29 +18,34 @@ import Help from "./pages/Help";
 import LocalPortal from "./pages/LocalPortal";
 import NotFound from "./pages/NotFound";
 
+// Create a client
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/locals" element={<Locals />} />
-          <Route path="/experiences" element={<Experiences />} />
-          <Route path="/experiences/:id" element={<ExperienceDetail />} />
-          <Route path="/my-trip" element={<MyTrip />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/local-portal" element={<LocalPortal />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/locals" element={<Locals />} />
+              <Route path="/experiences" element={<Experiences />} />
+              <Route path="/experiences/:id" element={<ExperienceDetail />} />
+              <Route path="/my-trip" element={<MyTrip />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/local-portal" element={<LocalPortal />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+};
 
 export default App;
