@@ -44,24 +44,21 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         </div>
       </div>
       
-      {/* Host Avatar and Name */}
+      {/* Host Avatar and Name with Location */}
       <div className="flex items-center gap-2 mb-2">
         <Avatar className="h-8 w-8 border border-primary/10">
           <AvatarFallback className="bg-primary/10 text-primary text-xs">
             {getInitials(experience.host)}
           </AvatarFallback>
         </Avatar>
-        <span className="text-sm font-medium text-primary">
-          {experience.host}
+        <span className="text-sm font-medium">
+          <span className="text-primary">{experience.host}</span>
+          <span className="text-gray-500"> • {experience.location}, Colombia</span>
         </span>
       </div>
       
       {/* Contenido sin borde de tarjeta */}
       <div className="space-y-1">
-        <div className="flex items-center justify-between">
-          <span className="font-medium text-secondary2">{experience.location}, Colombia</span>
-        </div>
-        
         <h3 className="text-lg font-semibold text-secondary2">{experience.title}</h3>
         
         <div className="flex items-center text-sm text-gray-600 gap-1">
