@@ -25,9 +25,13 @@ const Navbar = () => {
           <div className="flex-shrink-0 flex items-center">
             <Link 
               to="/" 
-              className="text-xl font-heading font-bold brand-gradient-text"
+              className="flex items-center"
             >
-              Kuna
+              <img 
+                src="/kuna-logo.svg" 
+                alt="Kuna Logo" 
+                className="h-10 w-auto"
+              />
             </Link>
           </div>
           
