@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Pages
 import Index from "./pages/Index";
-import Destinations from "./pages/Destinations";
 import Locals from "./pages/Locals";
 import Experiences from "./pages/Experiences";
 import MyTrip from "./pages/MyTrip";
@@ -27,7 +26,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/destinations" element={<Destinations />} />
           <Route path="/locals" element={<Locals />} />
           <Route path="/experiences" element={<Experiences />} />
           <Route path="/my-trip" element={<MyTrip />} />

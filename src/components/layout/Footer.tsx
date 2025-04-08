@@ -34,11 +34,6 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Explora</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/destinations" className="text-brand-secondary1/70 hover:text-white">
-                  Destinos
-                </Link>
-              </li>
-              <li>
                 <Link to="/locals" className="text-brand-secondary1/70 hover:text-white">
                   Locales
                 </Link>

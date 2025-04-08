@@ -1,13 +1,12 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, MapPin, Users, Calendar, BookOpen, HelpCircle, Info, User } from "lucide-react";
+import { Menu, X, Users, Calendar, BookOpen, HelpCircle, Info, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const navLinks = [
-  { name: "Explorar Destinos", path: "/destinations", icon: MapPin },
   { name: "Conoce Locales", path: "/locals", icon: Users },
   { name: "Experiencias", path: "/experiences", icon: Calendar },
   { name: "Comunidad", path: "/community", icon: BookOpen },
