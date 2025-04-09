@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar as CalendarIcon, Users } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
-import { es } from "date-fns/locale/es";
+import { es } from "date-fns/locale";  // Import directly from the locale folder
 
 type ExperienceBookingProps = {
   price: number;
