@@ -1,6 +1,6 @@
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Clock, MapPin } from "lucide-react";
+import { Clock, MapPin, Star } from "lucide-react";
 import { ExperienceType } from "@/types/experiences";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +29,13 @@ const FreeExperienceCard = ({ experience }: FreeExperienceCardProps) => {
         >
           Gratis
         </Badge>
+        {experience.rating && (
+          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+            <Star className="h-4 w-4 fill-colombia-yellow text-colombia-yellow" />
+            <span className="font-medium">{experience.rating}</span>
+            <span className="text-gray-600">({experience.reviews || 0})</span>
+          </div>
+        )}
       </div>
       
       {/* Contenido sin borde de tarjeta */}
