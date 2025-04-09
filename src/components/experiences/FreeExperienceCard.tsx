@@ -54,6 +54,10 @@ const FreeExperienceCard = ({ experience }: FreeExperienceCardProps) => {
           <span>{experience.duration}</span>
         </div>
         
+        <p className="pt-1 font-medium">
+          <span className="text-secondary2 text-primary">Gratis</span>
+        </p>
+        
         <div className="flex flex-wrap gap-2 pt-2">
           {experience.tags.map((tag, index) => (
             <span 
