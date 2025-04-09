@@ -11,11 +11,12 @@ const Experiences = () => {
   // Get guided experiences (with local hosts)
   const guidedExperiences = allExperiences.filter(exp => !exp.isSelfGuided).slice(0, 3);
   
-  // Get paid self-guided experiences
-  const paidSelfGuidedExperiences = allExperiences.filter(exp => exp.isSelfGuided && !exp.isFree).slice(0, 3);
+  // Get all self-guided experiences (both paid and free)
+  const paidSelfGuidedExperiences = allExperiences.filter(exp => exp.isSelfGuided && !exp.isFree).slice(0, 2);
+  const freeSelfGuidedExperiences = freeExperiences.slice(0, 2);
   
-  // Get free self-guided experiences
-  const freeSelfGuidedExperiences = freeExperiences.slice(0, 3);
+  // Combine both types of self-guided experiences
+  const allSelfGuidedExperiences = [...paidSelfGuidedExperiences, ...freeSelfGuidedExperiences];
 
   return (
     <section className="py-16 bg-white">
@@ -48,11 +49,11 @@ const Experiences = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
             <div className="max-w-2xl">
               <h2 className="text-3xl font-bold text-primary mb-4">
-                Experiencias autoguiadas de pago
+                Experiencias autoguiadas
               </h2>
               <p className="text-lg text-secondary2">
-                Descubre Colombia a tu ritmo con nuestras guías detalladas de pago.
-                Perfectas para exploradores que buscan flexibilidad con contenido premium.
+                Descubre Colombia a tu ritmo con nuestras guías detalladas, tanto gratuitas como premium.
+                Perfectas para exploradores independientes que buscan flexibilidad.
               </p>
             </div>
             <Link to="/experiences?selfGuided=true" className="mt-4 md:mt-0">
@@ -64,34 +65,12 @@ const Experiences = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {paidSelfGuidedExperiences.map((experience) => (
-              <ExperienceCard key={experience.id} experience={experience} />
-            ))}
-          </div>
-        </div>
-        
-        <div className="mt-20">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold text-primary mb-4">
-                Experiencias autoguiadas gratuitas
-              </h2>
-              <p className="text-lg text-secondary2">
-                Descubre lugares increíbles por tu cuenta con nuestras guías gratuitas.
-                Perfectas para exploradores independientes que buscan aventuras sin costo.
-              </p>
-            </div>
-            <Link to="/experiences?free=true" className="mt-4 md:mt-0">
-              <Button variant="ghost" className="text-primary hover:text-primary/90 hover:bg-orange-50 flex items-center gap-2">
-                Ver todas las experiencias gratuitas
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {freeSelfGuidedExperiences.map((experience) => (
-              <FreeExperienceCard key={experience.id} experience={experience} />
+            {allSelfGuidedExperiences.map((experience) => (
+              experience.isFree ? (
+                <FreeExperienceCard key={experience.id} experience={experience} />
+              ) : (
+                <ExperienceCard key={experience.id} experience={experience} />
+              )
             ))}
           </div>
         </div>
