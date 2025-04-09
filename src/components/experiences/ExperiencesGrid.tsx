@@ -22,13 +22,17 @@ const ExperiencesGrid = ({ experiences, isLoading }: ExperiencesGridProps) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {experiences.map((experience) => (
-        experience.isFree ? (
-          <FreeExperienceCard key={experience.id} experience={experience} />
-        ) : (
-          <ExperienceCard key={experience.id} experience={experience} />
-        )
-      ))}
+      {experiences.map((experience) => {
+        if (experience.isFree && experience.isSelfGuided) {
+          return <FreeExperienceCard key={experience.id} experience={experience} />;
+        } else if (experience.isSelfGuided) {
+          // Paid self-guided experiences
+          return <ExperienceCard key={experience.id} experience={experience} />;
+        } else {
+          // Guided experiences with local hosts
+          return <ExperienceCard key={experience.id} experience={experience} />;
+        }
+      })}
     </div>
   );
 };

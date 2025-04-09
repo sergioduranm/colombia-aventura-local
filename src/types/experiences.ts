@@ -26,4 +26,5 @@ export type ExperienceType = {
   };
   cancellationPolicy?: string;
   isFree?: boolean;
+  isSelfGuided?: boolean;
 };
