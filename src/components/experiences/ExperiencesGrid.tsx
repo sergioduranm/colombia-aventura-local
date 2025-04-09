@@ -25,11 +25,8 @@ const ExperiencesGrid = ({ experiences, isLoading }: ExperiencesGridProps) => {
       {experiences.map((experience) => {
         if (experience.isFree && experience.isSelfGuided) {
           return <FreeExperienceCard key={experience.id} experience={experience} />;
-        } else if (experience.isSelfGuided) {
-          // Paid self-guided experiences
-          return <ExperienceCard key={experience.id} experience={experience} />;
         } else {
-          // Guided experiences with local hosts
+          // Both paid self-guided and guided experiences with local hosts
           return <ExperienceCard key={experience.id} experience={experience} />;
         }
       })}
