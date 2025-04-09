@@ -14,6 +14,8 @@ type ExperienceHostProps = {
 const ExperienceHost = ({ name, avatar, since, languages, description }: ExperienceHostProps) => {
   // Get host initials for avatar fallback
   const getHostInitials = (name: string) => {
+    // Add null check to prevent trying to access charAt on undefined
+    if (!name) return "";
     return name.charAt(0).toUpperCase();
   };
 
