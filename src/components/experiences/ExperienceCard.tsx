@@ -15,9 +15,8 @@ type ExperienceCardProps = {
 };
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
-  // Get host initials for avatar fallback with null check
-  const getHostInitials = (name?: string) => {
-    if (!name) return "E"; // Default fallback to "E" for "Experience" if no host name
+  // Get host initials for avatar fallback
+  const getHostInitials = (name: string) => {
     return name.charAt(0).toUpperCase();
   };
 
@@ -47,18 +46,11 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
       {/* Contenido sin borde de tarjeta */}
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          {experience.host && (
-            <>
-              <Avatar className="h-6 w-6">
-                <AvatarImage src={experience.hostAvatar} alt={experience.host} />
-                <AvatarFallback>{getHostInitials(experience.host)}</AvatarFallback>
-              </Avatar>
-              <span className="text-secondary2">{experience.host} • {experience.location}, Colombia</span>
-            </>
-          )}
-          {!experience.host && (
-            <span className="text-secondary2">{experience.location}, Colombia</span>
-          )}
+          <Avatar className="h-6 w-6">
+            <AvatarImage src={experience.hostAvatar} alt={experience.host} />
+            <AvatarFallback>{getHostInitials(experience.host)}</AvatarFallback>
+          </Avatar>
+          <span className="text-secondary2">{experience.host} • {experience.location}, Colombia</span>
         </div>
         
         <Link to={`/experiences/${experience.id}`} className="block">
@@ -68,13 +60,9 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         <div className="flex items-center text-sm text-gray-600 gap-1">
           <Clock className="h-3.5 w-3.5 text-primary" />
           <span>{experience.duration}</span>
-          {experience.groupSize && (
-            <>
-              <span className="mx-1">•</span>
-              <Users className="h-3.5 w-3.5 text-primary" />
-              <span>{experience.groupSize}</span>
-            </>
-          )}
+          <span className="mx-1">•</span>
+          <Users className="h-3.5 w-3.5 text-primary" />
+          <span>{experience.groupSize}</span>
         </div>
         
         <p className="pt-1 font-medium">

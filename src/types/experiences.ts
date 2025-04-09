@@ -3,7 +3,7 @@ export type ExperienceType = {
   id: number;
   title: string;
   location: string;
-  host?: string;
+  host: string;
   hostAvatar?: string;
   hostSince?: string;
   hostLanguages?: string[];
@@ -11,9 +11,9 @@ export type ExperienceType = {
   price: number;
   currency: string;
   duration: string;
-  groupSize?: string;
-  rating?: number;
-  reviews?: number;
+  groupSize: string;
+  rating: number;
+  reviews: number;
   image: string;
   gallery?: string[];
   tags: string[];
@@ -25,6 +25,4 @@ export type ExperienceType = {
     equipment?: string;
   };
   cancellationPolicy?: string;
-  isFree?: boolean;
-  isSelfGuided?: boolean;
 };

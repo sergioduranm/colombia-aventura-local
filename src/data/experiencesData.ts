@@ -1,4 +1,3 @@
-
 import { ExperienceType } from "@/types/experiences";
 
 // Datos de ejemplo con más experiencias para la página completa
@@ -164,64 +163,6 @@ export const allExperiences: ExperienceType[] = [
       equipment: "Bastones de trekking y botiquín de primeros auxilios"
     },
     cancellationPolicy: "Cancelación gratuita hasta 48 horas antes de la experiencia."
-  },
-  // Experiencias autoguiadas de pago
-  {
-    id: 7,
-    title: "Recorrido arquitectónico por Cartagena",
-    location: "Cartagena",
-    price: 45000,
-    currency: "COP",
-    duration: "3 horas",
-    rating: 4.8,
-    reviews: 62,
-    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop",
-    tags: ["Arquitectura", "Historia", "Cultural"],
-    description: "Descubre la fascinante arquitectura colonial de Cartagena con esta guía detallada. Recorre las calles empedradas y admira los edificios históricos mientras aprendes sobre su historia y significado cultural.",
-    isSelfGuided: true,
-    itinerary: "Esta guía te llevará por un recorrido de 3 horas a través de los barrios más emblemáticos de Cartagena. Comenzarás en la Plaza de los Coches, seguirás por la Catedral de Santa Catalina y el Palacio de la Inquisición, para terminar en las murallas con vistas al mar Caribe.",
-    included: {
-      equipment: "Mapa detallado y audioguía en formato digital"
-    },
-    cancellationPolicy: "Cancelación gratuita hasta 24 horas antes de la compra."
-  },
-  {
-    id: 8,
-    title: "Ruta gastronómica por Medellín",
-    location: "Medellín",
-    price: 55000,
-    currency: "COP",
-    duration: "4 horas",
-    rating: 4.9,
-    reviews: 45,
-    image: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=800&auto=format&fit=crop",
-    tags: ["Gastronomía", "Cultural"],
-    description: "Explora los sabores de Medellín con esta guía gastronómica premium que te llevará a descubrir los mejores restaurantes locales, mercados tradicionales y platos típicos de la región paisa.",
-    isSelfGuided: true,
-    itinerary: "Esta guía te llevará por un recorrido gastronómico a través de los mejores lugares para comer en Medellín. Conocerás restaurantes locales, cafés especializados y mercados tradicionales donde podrás degustar los platos más representativos de la cocina paisa.",
-    included: {
-      equipment: "Guía digital con recomendaciones, precios y horarios"
-    },
-    cancellationPolicy: "Cancelación gratuita hasta 24 horas antes de la compra."
-  },
-  {
-    id: 9,
-    title: "Avistamiento de aves en los Llanos",
-    location: "Villavicencio",
-    price: 70000,
-    currency: "COP",
-    duration: "Flexible",
-    rating: 4.7,
-    reviews: 28,
-    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?q=80&w=800&auto=format&fit=crop",
-    tags: ["Naturaleza", "Aves", "Fotografía"],
-    description: "Guía especializada para observadores de aves en los Llanos Orientales, con información detallada sobre las mejores ubicaciones, temporadas y técnicas para avistar las especies más representativas de la región.",
-    isSelfGuided: true,
-    itinerary: "Esta guía digital te proporcionará información detallada sobre las mejores rutas y horarios para avistar aves en los Llanos Orientales. Incluye mapas, fotografías de identificación, cantos de aves y recomendaciones sobre equipo necesario.",
-    included: {
-      equipment: "Guía digital con fichas de identificación de más de 100 especies"
-    },
-    cancellationPolicy: "Cancelación gratuita hasta 24 horas antes de la compra."
   }
 ];
 
