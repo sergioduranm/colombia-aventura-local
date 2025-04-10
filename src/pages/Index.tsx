@@ -8,10 +8,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Heart, Share, MapPin, Bell, Users, Calendar, Clock } from "lucide-react";
+import { MessageSquare, Heart, Share, MapPin, Bell, Users, Calendar, Clock, Filter, Coffee, Utensils, Building, Mountain, User, DollarSign, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { allExperiences } from "@/data/experiencesData";
 import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group";
 
 const Index = () => {
   // State to track image loading errors
@@ -84,6 +99,13 @@ const Index = () => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency, maximumFractionDigits: 0 }).format(price);
   };
 
+  // Filter states
+  const [experienceTypeFilter, setExperienceTypeFilter] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 1000000]);
+  const [timeFilter, setTimeFilter] = useState<string>("");
+  const [hostNameFilter, setHostNameFilter] = useState<string>("");
+  const [hostSpecialtyFilter, setHostSpecialtyFilter] = useState<string>("");
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -131,31 +153,169 @@ const Index = () => {
           
           {/* Feed central */}
           <div className="col-span-1 lg:col-span-6 space-y-6">
-            {/* Sección de creación de post */}
+            {/* Sección de filtros */}
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <Avatar>
-                    <AvatarImage src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <div className="bg-gray-100 hover:bg-gray-200 rounded-full px-4 py-2 flex-1 text-gray-500 cursor-pointer">
-                    ¿Qué lugares de Colombia te gustaría visitar?
-                  </div>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-medium text-lg text-secondary2">Filtros</h3>
+                  <Button variant="ghost" size="sm" className="text-primary">
+                    <Filter className="mr-2 h-4 w-4" />
+                    Limpiar filtros
+                  </Button>
                 </div>
-                <Separator className="mb-4" />
-                <div className="flex justify-between">
-                  <Button variant="ghost" className="text-primary">
-                    <MapPin className="mr-2 h-4 w-4" />
-                    Ubicación
-                  </Button>
-                  <Button variant="ghost" className="text-primary">
-                    <Calendar className="mr-2 h-4 w-4" />
-                    Eventos
-                  </Button>
-                  <Button variant="ghost" className="text-primary">
-                    <Bell className="mr-2 h-4 w-4" />
-                    Notificaciones
+                
+                {/* Grupo de filtros para Experiencias */}
+                <Collapsible className="w-full space-y-2">
+                  <CollapsibleTrigger asChild>
+                    <div className="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-md">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5 text-primary" />
+                        <h4 className="font-medium text-secondary2">Experiencias</h4>
+                      </div>
+                      <div className="text-gray-400">▼</div>
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-4 px-2">
+                    {/* Tipo de experiencia */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Tipo</label>
+                      <ToggleGroup type="multiple" className="flex flex-wrap gap-2 justify-start">
+                        <ToggleGroupItem value="museo" variant="outline" size="sm" className="flex gap-1 items-center">
+                          <Building className="h-3.5 w-3.5" />
+                          <span>Museo</span>
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="caminata" variant="outline" size="sm" className="flex gap-1 items-center">
+                          <MapPin className="h-3.5 w-3.5" />
+                          <span>Caminata</span>
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="restaurante" variant="outline" size="sm" className="flex gap-1 items-center">
+                          <Utensils className="h-3.5 w-3.5" />
+                          <span>Restaurante</span>
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="cafe" variant="outline" size="sm" className="flex gap-1 items-center">
+                          <Coffee className="h-3.5 w-3.5" />
+                          <span>Café</span>
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="naturaleza" variant="outline" size="sm" className="flex gap-1 items-center">
+                          <Mountain className="h-3.5 w-3.5" />
+                          <span>Naturaleza</span>
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    </div>
+
+                    {/* Precio */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="text-sm font-medium text-gray-700">Precio</label>
+                        <span className="text-xs text-gray-500">
+                          {formatPrice(priceRange[0], 'COP')} - {formatPrice(priceRange[1], 'COP')}
+                        </span>
+                      </div>
+                      <Slider 
+                        defaultValue={[0, 1000000]} 
+                        max={1000000} 
+                        step={50000}
+                        value={priceRange}
+                        onValueChange={(value) => setPriceRange(value as number[])}
+                        className="py-4"
+                      />
+                    </div>
+
+                    {/* Horario */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Horario</label>
+                      <Select onValueChange={setTimeFilter}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Cualquier hora" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="manana">Mañana (6am-12pm)</SelectItem>
+                          <SelectItem value="tarde">Tarde (12pm-6pm)</SelectItem>
+                          <SelectItem value="noche">Noche (después de 6pm)</SelectItem>
+                          <SelectItem value="dia-completo">Día completo</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                <Separator className="my-3" />
+
+                {/* Grupo de filtros para Hosts */}
+                <Collapsible className="w-full space-y-2">
+                  <CollapsibleTrigger asChild>
+                    <div className="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-md">
+                      <div className="flex items-center gap-2">
+                        <User className="h-5 w-5 text-primary" />
+                        <h4 className="font-medium text-secondary2">Hosts</h4>
+                      </div>
+                      <div className="text-gray-400">▼</div>
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-4 px-2">
+                    {/* Nombre del host */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Nombre</label>
+                      <div className="relative">
+                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                        <Input 
+                          placeholder="Buscar por nombre..." 
+                          value={hostNameFilter}
+                          onChange={(e) => setHostNameFilter(e.target.value)}
+                          className="pl-8"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Especialidad */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700">Especialidad</label>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="specialty-gastronomy" />
+                          <label
+                            htmlFor="specialty-gastronomy"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Gastronomía
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="specialty-culture" />
+                          <label
+                            htmlFor="specialty-culture"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Cultura e Historia
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="specialty-nature" />
+                          <label
+                            htmlFor="specialty-nature"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Naturaleza y Aventura
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="specialty-nightlife" />
+                          <label
+                            htmlFor="specialty-nightlife"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Vida Nocturna
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                <div className="mt-4 flex justify-end">
+                  <Button className="bg-primary text-white">
+                    <Filter className="mr-2 h-4 w-4" />
+                    Aplicar Filtros
                   </Button>
                 </div>
               </CardContent>
