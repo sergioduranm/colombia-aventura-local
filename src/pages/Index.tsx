@@ -1,3 +1,4 @@
+
 import Hero from "@/components/home/Hero";
 import LocalExperts from "@/components/home/LocalExperts";
 import MissionStatement from "@/components/home/MissionStatement";
@@ -285,36 +286,7 @@ const Index = () => {
                 
                 <Separator className="my-4" />
                 
-                
-                <nav className="space-y-2 pt-2">
-                  <Link to="/my-trip" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <Calendar className="h-5 w-5" />
-                    <span className="text-sm font-medium">Mi Viaje</span>
-                  </Link>
-                  <Link to="/experiences" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <MapPin className="h-5 w-5" />
-                    <span className="text-sm font-medium">Experiencias</span>
-                  </Link>
-                  <Link to="/locals" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <Users className="h-5 w-5" />
-                    <span className="text-sm font-medium">Expertos Locales</span>
-                  </Link>
-                  <Link to="/community" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <MessageSquare className="h-5 w-5" />
-                    <span className="text-sm font-medium">Comunidad</span>
-                  </Link>
-                  <Separator className="my-3" />
-                  <h3 className="px-3 text-sm font-medium text-gray-500">Destinos populares</h3>
-                  <Link to="/experiences?location=medellin" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <span className="text-sm">Medellín</span>
-                  </Link>
-                  <Link to="/experiences?location=cartagena" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <span className="text-sm">Cartagena</span>
-                  </Link>
-                  <Link to="/experiences?location=amazonas" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
-                    <span className="text-sm">Amazonas</span>
-                  </Link>
-                </nav>
+                {/* The navigation section has been removed as requested */}
               </CardContent>
             </Card>
           </div>
