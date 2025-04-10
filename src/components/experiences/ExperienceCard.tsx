@@ -22,11 +22,11 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
       {/* Imagen con esquinas redondeadas y botón de favorito */}
-      <div className="relative mb-3">
+      <div className="relative">
         <Link to={`/experiences/${experience.id}`}>
-          <AspectRatio ratio={4/3} className="bg-muted rounded-xl overflow-hidden">
+          <AspectRatio ratio={4/3} className="bg-muted overflow-hidden">
             <img 
               src={experience.image} 
               alt={experience.title} 
@@ -44,8 +44,8 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         </div>
       </div>
       
-      {/* Contenido sin borde de tarjeta */}
-      <div className="space-y-1">
+      {/* Contenido con borde de tarjeta */}
+      <div className="p-4 flex-grow space-y-2">
         <div className="flex items-center gap-2">
           <Avatar className="h-6 w-6">
             <AvatarImage src={experience.hostAvatar} alt={experience.host} />
@@ -66,12 +66,12 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           <span>{experience.groupSize}</span>
         </div>
         
-        <p className="pt-1 font-medium">
+        <p className="font-medium">
           <span className="text-secondary2">{formatPrice(experience.price, experience.currency)}</span>
           <span className="text-gray-600"> por persona</span>
         </p>
         
-        <div className="flex flex-wrap gap-2 pt-2">
+        <div className="flex flex-wrap gap-2">
           {experience.tags.map((tag, index) => (
             <span 
               key={index} 
@@ -82,10 +82,10 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           ))}
         </div>
         
-        {/* Nuevo botón de Reservar */}
-        <div className="pt-3">
+        {/* Botón de Reservar más visible */}
+        <div className="pt-3 mt-auto">
           <Link to={`/experiences/${experience.id}`}>
-            <Button className="w-full gap-2">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-white gap-2">
               <Ticket className="h-4 w-4" />
               Reservar
             </Button>
