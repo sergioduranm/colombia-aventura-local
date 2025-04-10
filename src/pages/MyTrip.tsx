@@ -1,6 +1,7 @@
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import TravelPlanner from "@/components/travel/TravelPlanner";
 
 const MyTrip = () => {
   return (
@@ -13,11 +14,7 @@ const MyTrip = () => {
             Tu espacio personal para organizar y gestionar tus planes de viaje por Colombia.
           </p>
           
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-500">
-              Próximamente: Planificador de viaje personalizado, favoritos guardados, reservas y chat con locales.
-            </p>
-          </div>
+          <TravelPlanner />
         </div>
       </main>
       <Footer />
