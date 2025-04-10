@@ -1,5 +1,5 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, MouseEvent as ReactMouseEvent } from 'react';
 import { Calendar as CalendarIcon, Clock, Plus, X, Edit2, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { toast } from "sonner";
 
 interface Activity {
   id: number;
@@ -20,6 +22,14 @@ interface Activity {
 interface Day {
   id: number;
   name: string;
+}
+
+interface SelectionInfo {
+  dayId: number;
+  startTime: string;
+  endTime: string;
+  top: number;
+  height: number;
 }
 
 const TravelPlanner = () => {
@@ -50,12 +60,116 @@ const TravelPlanner = () => {
   const [nextId, setNextId] = useState(6);
   const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
 
+  // Nueva estado para la selección de franja horaria
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState<{ dayId: number, time: string, y: number } | null>(null);
+  const [currentSelection, setCurrentSelection] = useState<SelectionInfo | null>(null);
+  const [quickActivityName, setQuickActivityName] = useState('');
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
+
   const hourRefs = useRef<Record<number, Record<string, HTMLDivElement | null>>>({});
+  const timeGridRef = useRef<HTMLDivElement | null>(null);
 
   const timeSlots = [];
   for (let i = 6; i < 23; i++) {
     timeSlots.push(`${i.toString().padStart(2, '0')}:00`);
   }
+
+  // Función para manejar inicio de selección en el calendario
+  const handleMouseDown = (e: ReactMouseEvent<HTMLDivElement>, dayId: number, time: string) => {
+    if (draggedActivity) return; // No iniciamos selección si estamos arrastrando una actividad
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    
+    setIsSelecting(true);
+    setSelectionStart({ dayId, time, y });
+    setCurrentSelection({
+      dayId,
+      startTime: time,
+      endTime: time,
+      top: getActivityPosition(time),
+      height: 15 // Altura mínima inicial
+    });
+  };
+
+  // Función para manejar movimiento durante la selección
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>, dayId: number, time: string) => {
+    if (!isSelecting || !selectionStart || selectionStart.dayId !== dayId) return;
+    
+    const startY = getActivityPosition(selectionStart.time);
+    const currentY = getActivityPosition(time);
+    
+    // Aseguramos que la selección va de arriba hacia abajo
+    const isSelectionGoingDown = currentY >= startY;
+    
+    if (isSelectionGoingDown) {
+      // Selección hacia abajo
+      setCurrentSelection({
+        dayId,
+        startTime: selectionStart.time,
+        endTime: time,
+        top: startY,
+        height: currentY - startY + 64 // Añadimos la altura de una celda
+      });
+    } else {
+      // Selección hacia arriba
+      setCurrentSelection({
+        dayId,
+        startTime: time,
+        endTime: selectionStart.time,
+        top: currentY,
+        height: startY - currentY + 64 // Añadimos la altura de una celda
+      });
+    }
+  };
+
+  // Función para finalizar la selección
+  const handleMouseUp = () => {
+    if (isSelecting && currentSelection) {
+      // Calculamos la duración basada en la diferencia de tiempo
+      const startMinutes = timeToMinutes(currentSelection.startTime);
+      const endMinutes = timeToMinutes(currentSelection.endTime) + 60; // Añadimos 60 minutos porque el tiempo final representa el inicio de esa hora
+      const durationMinutes = endMinutes - startMinutes;
+      
+      if (durationMinutes >= 30) { // Solo mostramos el diálogo si la selección es significativa
+        setShowQuickAdd(true);
+        // Pre-configuramos la nueva actividad con los datos de la selección
+        setNewActivity({
+          id: 0,
+          name: '',
+          dayId: currentSelection.dayId,
+          startTime: currentSelection.startTime,
+          duration: durationMinutes
+        });
+      }
+    }
+    
+    setIsSelecting(false);
+    setSelectionStart(null);
+  };
+
+  // Función para crear rápidamente una actividad desde la selección
+  const quickAddActivity = () => {
+    if (!quickActivityName.trim()) {
+      toast.error("Por favor ingresa un nombre para la actividad");
+      return;
+    }
+    
+    const activityToAdd = {
+      ...newActivity,
+      id: nextId,
+      name: quickActivityName
+    };
+    
+    setActivities([...activities, activityToAdd]);
+    setNextId(nextId + 1);
+    setQuickActivityName('');
+    setShowQuickAdd(false);
+    setCurrentSelection(null);
+    
+    toast.success(`Actividad "${quickActivityName}" creada exitosamente`);
+  };
 
   const handleDragStart = (activity: Activity) => {
     setDraggedActivity(activity);
@@ -130,7 +244,18 @@ const TravelPlanner = () => {
 
   const getActivityPosition = (startTime: string) => {
     const [hours] = startTime.split(':');
-    return (parseInt(hours) - 6) * 60;
+    return (parseInt(hours) - 6) * 64; // Cambiado a 64px para que coincida con la altura de la celda
+  };
+
+  const timeToMinutes = (time: string) => {
+    const [hours, minutes = '0'] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  };
+
+  const minutesToTime = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
   };
 
   const getActivityColor = (activity: Activity) => {
@@ -229,9 +354,28 @@ const TravelPlanner = () => {
           </Button>
         </div>
         
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="rounded-md border border-muted p-2 mb-4 bg-muted/10">
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-medium">Consejo:</span> Haz clic y arrastra en el calendario para crear rápidamente una actividad.
+                </p>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="max-w-xs">Selecciona una franja horaria directamente en el calendario y añade una actividad en segundos.</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        
         {/* Calendar Grid */}
         <div className="overflow-x-auto pb-4 border rounded-md">
-          <div className="flex min-w-full">
+          <div 
+            className="flex min-w-full" 
+            ref={timeGridRef}
+            onMouseUp={handleMouseUp}
+          >
             {/* Time column */}
             <div className="flex flex-col min-w-[80px] text-right pr-2 pt-12 bg-muted/20">
               {timeSlots.map(time => (
@@ -268,6 +412,8 @@ const TravelPlanner = () => {
                       }}
                       onDragOver={(e) => handleDragOver(e, day.id, time)}
                       onDrop={(e) => handleDrop(e, day.id, time)}
+                      onMouseDown={(e) => handleMouseDown(e, day.id, time)}
+                      onMouseMove={(e) => handleMouseMove(e, day.id, time)}
                       className={`h-16 border-b border-border/40 ${
                         isDraggingOver && isDraggingOver.dayId === day.id && isDraggingOver.time === time
                           ? 'bg-accent/10'
@@ -275,6 +421,17 @@ const TravelPlanner = () => {
                       }`}
                     />
                   ))}
+                  
+                  {/* Visualización del área seleccionada */}
+                  {isSelecting && currentSelection && currentSelection.dayId === day.id && (
+                    <div
+                      style={{ 
+                        top: `${currentSelection.top}px`, 
+                        height: `${currentSelection.height}px` 
+                      }}
+                      className="absolute left-1 right-1 bg-primary/20 border border-dashed border-primary rounded-md pointer-events-none"
+                    />
+                  )}
                   
                   {/* Activities */}
                   {activities
@@ -409,6 +566,51 @@ const TravelPlanner = () => {
               </DialogFooter>
             </DialogContent>
           )}
+        </Dialog>
+
+        {/* Quick Add Activity Dialog */}
+        <Dialog open={showQuickAdd} onOpenChange={setShowQuickAdd}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Añadir Actividad Rápida</DialogTitle>
+            </DialogHeader>
+            
+            <div className="py-4">
+              <div className="mb-4">
+                <Input
+                  placeholder="Nombre de la actividad"
+                  value={quickActivityName}
+                  onChange={(e) => setQuickActivityName(e.target.value)}
+                  className="w-full"
+                  autoFocus
+                />
+              </div>
+              
+              {currentSelection && (
+                <div className="text-sm text-muted-foreground">
+                  <p>Día: {days.find(d => d.id === currentSelection.dayId)?.name}</p>
+                  <p>Horario: {currentSelection.startTime} - {minutesToTime(timeToMinutes(currentSelection.startTime) + (currentSelection.height / 64) * 60)}</p>
+                  <p>Duración: {Math.round(newActivity.duration / 60 * 10) / 10} horas</p>
+                </div>
+              )}
+            </div>
+            
+            <DialogFooter>
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setShowQuickAdd(false);
+                  setCurrentSelection(null);
+                }}
+              >
+                Cancelar
+              </Button>
+              <Button onClick={quickAddActivity}>
+                <Plus className="h-4 w-4 mr-2" />
+                Crear Actividad
+              </Button>
+            </DialogFooter>
+          </DialogContent>
         </Dialog>
       </CardContent>
     </Card>
