@@ -1,11 +1,9 @@
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Star, Heart, Users, Clock, Ticket, MessageSquare, Share } from "lucide-react";
+import { Star, Heart, Users, Clock } from "lucide-react";
 import { ExperienceType } from "@/types/experiences";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 
 // Format price with thousands separators
 const formatPrice = (price: number, currency: string) => {
@@ -81,35 +79,6 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
               {tag}
             </span>
           ))}
-        </div>
-        
-        {/* Botón de Reservar prominente */}
-        <div className="pt-3 mt-auto">
-          <Link to={`/experiences/${experience.id}`}>
-            <Button className="w-full bg-primary hover:bg-primary/90 text-white font-medium">
-              <Ticket className="h-4 w-4 mr-1" />
-              Reservar
-            </Button>
-          </Link>
-        </div>
-        
-        {/* Botones de acción secundarios */}
-        <div className="pt-3">
-          <Separator className="mb-3" />
-          <div className="flex justify-between">
-            <Button variant="ghost" size="sm" className="flex-1 text-gray-600">
-              <Heart className="mr-1 h-4 w-4" />
-              Me interesa
-            </Button>
-            <Button variant="ghost" size="sm" className="flex-1 text-gray-600">
-              <MessageSquare className="mr-1 h-4 w-4" />
-              Preguntar
-            </Button>
-            <Button variant="ghost" size="sm" className="flex-1 text-gray-600">
-              <Share className="mr-1 h-4 w-4" />
-              Compartir
-            </Button>
-          </div>
         </div>
       </div>
     </div>
