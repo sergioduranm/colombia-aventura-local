@@ -1,7 +1,6 @@
 
 import Hero from "@/components/home/Hero";
 import LocalExperts from "@/components/home/LocalExperts";
-import Experiences from "@/components/home/Experiences";
 import MissionStatement from "@/components/home/MissionStatement";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -9,8 +8,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Heart, Share, MapPin, Bell, Users, Calendar } from "lucide-react";
+import { MessageSquare, Heart, Share, MapPin, Bell, Users, Calendar, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { allExperiences } from "@/data/experiencesData";
 
 const Index = () => {
   // Ejemplos de publicaciones para el feed
@@ -44,6 +44,27 @@ const Index = () => {
       shares: 8
     }
   ];
+
+  // Seleccionar experiencias para intercalar en el feed
+  const experiencesForFeed = allExperiences.slice(0, 3);
+  
+  // Crear un array combinado de posts y experiencias
+  const combinedFeed = [];
+  const maxItems = Math.max(feedPosts.length, experiencesForFeed.length);
+  
+  for (let i = 0; i < maxItems; i++) {
+    if (i < feedPosts.length) {
+      combinedFeed.push({ type: 'post', content: feedPosts[i] });
+    }
+    if (i < experiencesForFeed.length) {
+      combinedFeed.push({ type: 'experience', content: experiencesForFeed[i] });
+    }
+  }
+
+  // Format price with thousands separators
+  const formatPrice = (price: number, currency: string) => {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency, maximumFractionDigits: 0 }).format(price);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -122,85 +143,159 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            {/* Posts del feed */}
-            {feedPosts.map(post => (
-              <Card key={post.id} className="overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="p-4">
-                    <div className="flex items-start gap-3">
-                      <Avatar>
-                        <AvatarImage src={post.author.avatar} />
-                        <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h3 className="font-medium text-secondary2">{post.author.name}</h3>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <MapPin className="h-3.5 w-3.5 mr-1 text-primary" />
-                          <span>{post.author.location}</span>
-                          <span className="mx-1">•</span>
-                          <span>{post.time}</span>
+            {/* Posts y experiencias intercaladas del feed */}
+            {combinedFeed.map((item, index) => (
+              <div key={`feed-item-${index}`}>
+                {item.type === 'post' && (
+                  <Card key={`post-${item.content.id}`} className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <div className="p-4">
+                        <div className="flex items-start gap-3">
+                          <Avatar>
+                            <AvatarImage src={item.content.author.avatar} />
+                            <AvatarFallback>{item.content.author.name.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <h3 className="font-medium text-secondary2">{item.content.author.name}</h3>
+                            <div className="flex items-center text-sm text-gray-500">
+                              <MapPin className="h-3.5 w-3.5 mr-1 text-primary" />
+                              <span>{item.content.author.location}</span>
+                              <span className="mx-1">•</span>
+                              <span>{item.content.time}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="mt-3 text-secondary2">{item.content.content}</p>
+                      </div>
+                      
+                      {item.content.image && (
+                        <div className="relative">
+                          <img 
+                            src={item.content.image} 
+                            alt="Publicación" 
+                            className="w-full object-cover max-h-[500px]"
+                          />
+                        </div>
+                      )}
+                      
+                      <div className="p-4">
+                        <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+                          <div>{item.content.likes} me gusta</div>
+                          <div>{item.content.comments} comentarios • {item.content.shares} compartidos</div>
+                        </div>
+                        <Separator className="mb-3" />
+                        <div className="flex justify-between">
+                          <Button variant="ghost" className="flex-1 text-gray-600">
+                            <Heart className="mr-2 h-4 w-4" />
+                            Me gusta
+                          </Button>
+                          <Button variant="ghost" className="flex-1 text-gray-600">
+                            <MessageSquare className="mr-2 h-4 w-4" />
+                            Comentar
+                          </Button>
+                          <Button variant="ghost" className="flex-1 text-gray-600">
+                            <Share className="mr-2 h-4 w-4" />
+                            Compartir
+                          </Button>
                         </div>
                       </div>
-                    </div>
-                    <p className="mt-3 text-secondary2">{post.content}</p>
-                  </div>
-                  
-                  {post.image && (
-                    <div className="relative">
-                      <img 
-                        src={post.image} 
-                        alt="Publicación" 
-                        className="w-full object-cover max-h-[500px]"
-                      />
-                    </div>
-                  )}
-                  
-                  <div className="p-4">
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-                      <div>{post.likes} me gusta</div>
-                      <div>{post.comments} comentarios • {post.shares} compartidos</div>
-                    </div>
-                    <Separator className="mb-3" />
-                    <div className="flex justify-between">
-                      <Button variant="ghost" className="flex-1 text-gray-600">
-                        <Heart className="mr-2 h-4 w-4" />
-                        Me gusta
-                      </Button>
-                      <Button variant="ghost" className="flex-1 text-gray-600">
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        Comentar
-                      </Button>
-                      <Button variant="ghost" className="flex-1 text-gray-600">
-                        <Share className="mr-2 h-4 w-4" />
-                        Compartir
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </Card>
+                )}
+                
+                {item.type === 'experience' && (
+                  <Card key={`experience-${item.content.id}`} className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <div className="p-4">
+                        <div className="flex items-start gap-3">
+                          <Avatar>
+                            <AvatarImage src={item.content.hostAvatar} alt={item.content.host} />
+                            <AvatarFallback>{item.content.host.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <h3 className="font-medium text-secondary2">{item.content.host}</h3>
+                            <div className="flex items-center text-sm text-gray-500">
+                              <MapPin className="h-3.5 w-3.5 mr-1 text-primary" />
+                              <span>{item.content.location}, Colombia</span>
+                              <span className="mx-1">•</span>
+                              <span>Ofrece una experiencia</span>
+                            </div>
+                          </div>
+                        </div>
+                        <Link to={`/experiences/${item.content.id}`}>
+                          <h3 className="mt-3 text-lg font-semibold text-secondary2 hover:underline">{item.content.title}</h3>
+                        </Link>
+                      </div>
+                      
+                      <div className="relative">
+                        <Link to={`/experiences/${item.content.id}`}>
+                          <img 
+                            src={item.content.image} 
+                            alt={item.content.title} 
+                            className="w-full object-cover max-h-[400px]"
+                          />
+                        </Link>
+                        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+                          <Heart className="h-4 w-4 fill-colombia-yellow text-colombia-yellow" />
+                          <span className="font-medium">{item.content.rating}</span>
+                          <span className="text-gray-600">({item.content.reviews})</span>
+                        </div>
+                      </div>
+                      
+                      <div className="p-4">
+                        <div className="flex items-center text-sm text-gray-600 gap-2 mb-2">
+                          <Clock className="h-4 w-4 text-primary" />
+                          <span>{item.content.duration}</span>
+                          <span className="mx-1">•</span>
+                          <Users className="h-4 w-4 text-primary" />
+                          <span>{item.content.groupSize}</span>
+                        </div>
+                        
+                        <p className="mb-3 font-medium">
+                          <span className="text-secondary2">{formatPrice(item.content.price, item.content.currency)}</span>
+                          <span className="text-gray-600"> por persona</span>
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {item.content.tags.map((tag, tagIndex) => (
+                            <span 
+                              key={tagIndex} 
+                              className="text-xs bg-orange-100 text-primary px-2 py-1 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <Separator className="mb-3" />
+                        
+                        <div className="flex justify-between">
+                          <Button variant="ghost" className="flex-1 text-gray-600">
+                            <Heart className="mr-2 h-4 w-4" />
+                            Me interesa
+                          </Button>
+                          <Button variant="ghost" className="flex-1 text-gray-600">
+                            <MessageSquare className="mr-2 h-4 w-4" />
+                            Preguntar
+                          </Button>
+                          <Button variant="ghost" className="flex-1 text-gray-600">
+                            <Share className="mr-2 h-4 w-4" />
+                            Compartir
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
             ))}
             
-            {/* Secciones de contenido original transformadas como cards en el feed */}
+            {/* Sección de misión  */}
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <div className="p-4">
-                  <h3 className="font-bold text-lg text-primary mb-2">Experiencias destacadas</h3>
-                  <p className="text-secondary2">Vive Colombia a través de experiencias únicas diseñadas y guiadas por locales.</p>
-                </div>
-                <div className="px-4 pb-4">
-                  <Experiences />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="p-4">
-                  <h3 className="font-bold text-lg text-primary mb-2">Expertos locales</h3>
-                  <p className="text-secondary2">Conecta con colombianos apasionados que compartirán contigo su conocimiento y cultura.</p>
-                </div>
-                <div className="px-4 pb-4">
-                  <LocalExperts />
+                  <h3 className="font-bold text-lg text-primary mb-2">Nuestra misión</h3>
+                  <p className="text-secondary2">Conectar viajeros con colombianos apasionados para crear experiencias auténticas y significativas.</p>
                 </div>
               </CardContent>
             </Card>
