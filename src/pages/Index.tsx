@@ -1,4 +1,3 @@
-
 import Hero from "@/components/home/Hero";
 import LocalExperts from "@/components/home/LocalExperts";
 import MissionStatement from "@/components/home/MissionStatement";
@@ -31,6 +30,10 @@ import {
 const Index = () => {
   // State to track image loading errors
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+
+  // Track the open state of filter sections - setting them to true by default
+  const [experienceFiltersOpen, setExperienceFiltersOpen] = useState(true);
+  const [hostFiltersOpen, setHostFiltersOpen] = useState(true);
 
   // Ejemplos de publicaciones para el feed
   const feedPosts = [
@@ -128,15 +131,20 @@ const Index = () => {
                     </Button>
                   </div>
                   
-                  {/* Grupo de filtros para Experiencias */}
-                  <Collapsible className="w-full space-y-2">
+                  {/* Grupo de filtros para Experiencias - inicialmente abierto */}
+                  <Collapsible 
+                    className="w-full space-y-2" 
+                    open={experienceFiltersOpen}
+                    onOpenChange={setExperienceFiltersOpen}
+                    defaultOpen={true}
+                  >
                     <CollapsibleTrigger asChild>
                       <div className="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-md">
                         <div className="flex items-center gap-2">
                           <MapPin className="h-5 w-5 text-primary" />
                           <h4 className="font-medium text-secondary2">Experiencias</h4>
                         </div>
-                        <div className="text-gray-400">▼</div>
+                        <div className="text-gray-400">{experienceFiltersOpen ? "▲" : "▼"}</div>
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="space-y-4 px-2">
@@ -205,15 +213,20 @@ const Index = () => {
 
                   <Separator className="my-3" />
 
-                  {/* Grupo de filtros para Hosts */}
-                  <Collapsible className="w-full space-y-2">
+                  {/* Grupo de filtros para Hosts - inicialmente abierto */}
+                  <Collapsible 
+                    className="w-full space-y-2"
+                    open={hostFiltersOpen}
+                    onOpenChange={setHostFiltersOpen}
+                    defaultOpen={true}
+                  >
                     <CollapsibleTrigger asChild>
                       <div className="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-md">
                         <div className="flex items-center gap-2">
                           <User className="h-5 w-5 text-primary" />
                           <h4 className="font-medium text-secondary2">Hosts</h4>
                         </div>
-                        <div className="text-gray-400">▼</div>
+                        <div className="text-gray-400">{hostFiltersOpen ? "▲" : "▼"}</div>
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="space-y-4 px-2">
