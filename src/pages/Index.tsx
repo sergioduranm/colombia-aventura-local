@@ -285,7 +285,7 @@ const Index = () => {
                 
                 <Separator className="my-4" />
                 
-                {/* Navigation menu - keeping the navigation links */}
+                
                 <nav className="space-y-2 pt-2">
                   <Link to="/my-trip" className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:bg-secondary">
                     <Calendar className="h-5 w-5" />
