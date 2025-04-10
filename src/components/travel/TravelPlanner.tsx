@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -7,12 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 
-  const timeToMinutes = (time: string): number => {
-    const [hoursStr, minutesStr = '0'] = time.split(':');
-    const hours = parseInt(hoursStr, 10);
-    const minutes = parseInt(minutesStr, 10);
-    return hours * 60 + minutes;
-  };
+const timeToMinutes = (time: string): number => {
+  const [hoursStr, minutesStr = '0'] = time.split(':');
+  const hours = parseInt(hoursStr, 10);
+  const minutes = parseInt(minutesStr, 10);
+  return hours * 60 + minutes;
+};
 
 const TravelPlanner = () => {
   const [activities, setActivities] = useState<{ id: number; name: string; location: string; duration: number; cost: number; time: string; }[]>([]);
