@@ -1,4 +1,3 @@
-
 import Hero from "@/components/home/Hero";
 import LocalExperts from "@/components/home/LocalExperts";
 import MissionStatement from "@/components/home/MissionStatement";
@@ -289,16 +288,6 @@ const Index = () => {
                 )}
               </div>
             ))}
-            
-            {/* Sección de misión  */}
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="p-4">
-                  <h3 className="font-bold text-lg text-primary mb-2">Nuestra misión</h3>
-                  <p className="text-secondary2">Conectar viajeros con colombianos apasionados para crear experiencias auténticas y significativas.</p>
-                </div>
-              </CardContent>
-            </Card>
           </div>
           
           {/* Sidebar derecho */}
