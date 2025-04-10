@@ -1,3 +1,4 @@
+
 import Hero from "@/components/home/Hero";
 import LocalExperts from "@/components/home/LocalExperts";
 import MissionStatement from "@/components/home/MissionStatement";
@@ -10,19 +11,23 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Heart, Share, MapPin, Bell, Users, Calendar, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { allExperiences } from "@/data/experiencesData";
+import { useState, useEffect } from "react";
 
 const Index = () => {
+  // State to track image loading errors
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+
   // Ejemplos de publicaciones para el feed
   const feedPosts = [
     {
       id: 1,
       author: {
         name: "Carlos Ramírez",
-        avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop",
+        avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop",
         location: "Medellín, Antioquia"
       },
       content: "Acabo de guiar a un grupo increíble por los senderos del café en el Eje Cafetero. ¡Una experiencia inolvidable conectando con nuestra tierra y cultura!",
-      image: "https://images.unsplash.com/photo-1598038990673-77f84dbb94a1?q=80&w=2070&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1598038990673-77f84dbb94a1?q=80&w=800&auto=format&fit=crop",
       time: "Hace 2 horas",
       likes: 45,
       comments: 12,
@@ -32,11 +37,11 @@ const Index = () => {
       id: 2,
       author: {
         name: "Natalia Gómez",
-        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop",
+        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
         location: "Cartagena, Bolívar"
       },
       content: "Hoy compartí la historia del Castillo San Felipe con viajeros de todo el mundo. Descubrimos juntos los secretos de las murallas y la resistencia cartagenera. ¿Quién quiere unirse a la próxima aventura histórica?",
-      image: "https://images.unsplash.com/photo-1591971737211-9a9f15341d04?q=80&w=1974&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1591971737211-9a9f15341d04?q=80&w=800&auto=format&fit=crop",
       time: "Hace 5 horas",
       likes: 78,
       comments: 23,
@@ -59,6 +64,20 @@ const Index = () => {
       combinedFeed.push({ type: 'experience', content: experiencesForFeed[i] });
     }
   }
+
+  // Handle image errors
+  const handleImageError = (imageId: string) => {
+    setImageErrors(prev => ({ ...prev, [imageId]: true }));
+  };
+
+  // Get fallback image URL
+  const getFallbackImage = (type: string) => {
+    if (type === 'post') {
+      return "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop";
+    } else {
+      return "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=800&auto=format&fit=crop";
+    }
+  };
 
   // Format price with thousands separators
   const formatPrice = (price: number, currency: string) => {
@@ -117,7 +136,7 @@ const Index = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3 mb-4">
                   <Avatar>
-                    <AvatarImage src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1288&auto=format&fit=crop" />
+                    <AvatarImage src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" />
                     <AvatarFallback>JD</AvatarFallback>
                   </Avatar>
                   <div className="bg-gray-100 hover:bg-gray-200 rounded-full px-4 py-2 flex-1 text-gray-500 cursor-pointer">
@@ -151,7 +170,10 @@ const Index = () => {
                       <div className="p-4">
                         <div className="flex items-start gap-3">
                           <Avatar>
-                            <AvatarImage src={item.content.author.avatar} />
+                            <AvatarImage 
+                              src={item.content.author.avatar} 
+                              onError={() => handleImageError(`avatar-${item.content.id}`)}
+                            />
                             <AvatarFallback>{item.content.author.name.charAt(0)}</AvatarFallback>
                           </Avatar>
                           <div>
@@ -170,9 +192,10 @@ const Index = () => {
                       {item.content.image && (
                         <div className="relative">
                           <img 
-                            src={item.content.image} 
+                            src={imageErrors[`post-${item.content.id}`] ? getFallbackImage('post') : item.content.image}
                             alt="Publicación" 
                             className="w-full object-cover max-h-[500px]"
+                            onError={() => handleImageError(`post-${item.content.id}`)}
                           />
                         </div>
                       )}
@@ -208,7 +231,11 @@ const Index = () => {
                       <div className="p-4">
                         <div className="flex items-start gap-3">
                           <Avatar>
-                            <AvatarImage src={item.content.hostAvatar} alt={item.content.host} />
+                            <AvatarImage 
+                              src={item.content.hostAvatar} 
+                              alt={item.content.host}
+                              onError={() => handleImageError(`host-${item.content.id}`)}
+                            />
                             <AvatarFallback>{item.content.host.charAt(0)}</AvatarFallback>
                           </Avatar>
                           <div>
@@ -229,9 +256,10 @@ const Index = () => {
                       <div className="relative">
                         <Link to={`/experiences/${item.content.id}`}>
                           <img 
-                            src={item.content.image} 
+                            src={imageErrors[`exp-${item.content.id}`] ? getFallbackImage('experience') : item.content.image}
                             alt={item.content.title} 
                             className="w-full object-cover max-h-[400px]"
+                            onError={() => handleImageError(`exp-${item.content.id}`)}
                           />
                         </Link>
                         <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
@@ -334,25 +362,53 @@ const Index = () => {
                 <h3 className="font-medium mb-4 text-secondary2">Destinos sugeridos</h3>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="relative rounded-lg overflow-hidden h-24 group">
-                    <img src="https://images.unsplash.com/photo-1529715272646-88eea51c9933?q=80&w=2080&auto=format&fit=crop" className="w-full h-full object-cover" alt="Medellín" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1529715272646-88eea51c9933?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover" 
+                      alt="Medellín" 
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=800&auto=format&fit=crop";
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-2">
                       <span className="text-white font-medium text-sm">Medellín</span>
                     </div>
                   </div>
                   <div className="relative rounded-lg overflow-hidden h-24 group">
-                    <img src="https://images.unsplash.com/photo-1545761731-021e45fe1584?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" alt="Cartagena" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1545761731-021e45fe1584?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover" 
+                      alt="Cartagena"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=800&auto=format&fit=crop";
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-2">
                       <span className="text-white font-medium text-sm">Cartagena</span>
                     </div>
                   </div>
                   <div className="relative rounded-lg overflow-hidden h-24 group">
-                    <img src="https://images.unsplash.com/photo-1593029767435-f740506eb0a2?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" alt="Bogotá" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1593029767435-f740506eb0a2?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover" 
+                      alt="Bogotá"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&auto=format&fit=crop";
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-2">
                       <span className="text-white font-medium text-sm">Bogotá</span>
                     </div>
                   </div>
                   <div className="relative rounded-lg overflow-hidden h-24 group">
-                    <img src="https://images.unsplash.com/photo-1560252061-bbcc7c448342?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" alt="Cali" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1560252061-bbcc7c448342?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover" 
+                      alt="Cali"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop";
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-2">
                       <span className="text-white font-medium text-sm">Cali</span>
                     </div>
