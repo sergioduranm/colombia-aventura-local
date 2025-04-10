@@ -1,3 +1,4 @@
+
 import Hero from "@/components/home/Hero";
 import LocalExperts from "@/components/home/LocalExperts";
 import MissionStatement from "@/components/home/MissionStatement";
@@ -117,9 +118,9 @@ const Index = () => {
         
         {/* Feed Layout - estructura principal */}
         <div className="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Sidebar izquierdo */}
+          {/* Sidebar izquierdo - eliminado "sticky" */}
           <div className="hidden lg:block lg:col-span-3">
-            <Card className="sticky top-20">
+            <Card>
               <CardContent className="p-4">
                 {/* Sección de filtros */}
                 <div>
