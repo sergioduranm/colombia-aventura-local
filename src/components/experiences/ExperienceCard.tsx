@@ -1,9 +1,10 @@
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Star, Heart, Users, Clock } from "lucide-react";
+import { Star, Heart, Users, Clock, Ticket } from "lucide-react";
 import { ExperienceType } from "@/types/experiences";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 // Format price with thousands separators
 const formatPrice = (price: number, currency: string) => {
@@ -79,6 +80,16 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
               {tag}
             </span>
           ))}
+        </div>
+        
+        {/* Nuevo botón de Reservar */}
+        <div className="pt-3">
+          <Link to={`/experiences/${experience.id}`}>
+            <Button className="w-full gap-2">
+              <Ticket className="h-4 w-4" />
+              Reservar
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
